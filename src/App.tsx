@@ -1,11 +1,20 @@
-import { Suspense, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls, Text } from "@react-three/drei";
 
-// @ts-ignore
-import Model from "./Model";
-import DiamondModel from "./DiamondModel";
-import PurpleDiamond from "./PurpleDiamond";
-import { Environment, OrbitControls } from "@react-three/drei";
+const Model = lazy(() => import("./Model"));
+const DiamondModel = lazy(() => import("./DiamondModel"));
+const PurpleDiamond = lazy(() => import("./PurpleDiamond"));
+
+const Loading = () => {
+  return (
+    <mesh position={[0, 0, 0]}>
+      <Text fontSize={1} color="black" anchorX="center" anchorY="middle">
+        Loading...
+      </Text>
+    </mesh>
+  );
+};
 
 function App() {
   const [selectedStone, setSelectedStone] = useState("diamond");
@@ -15,7 +24,7 @@ function App() {
         <Canvas>
           <ambientLight intensity={1.5} />
           <OrbitControls />
-          <Suspense fallback={null}>
+          <Suspense fallback={<Loading />}>
             <Model />
             {selectedStone === "diamond" ? (
               <DiamondModel />
