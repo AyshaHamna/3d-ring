@@ -64,7 +64,7 @@ function DragnDrop() {
 
         <Suspense fallback={null}>
           <mesh ref={ringRef} position={[0, 0, 0]}>
-          <primitive object={new THREE.AxesHelper(53)} />
+          {/* <primitive object={new THREE.AxesHelper(53)} /> */}
             <Model
               position={[0, 0, 0]}
               rotation={[1.6, 1, 0]}
