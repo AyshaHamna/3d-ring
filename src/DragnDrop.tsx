@@ -1,10 +1,23 @@
-import { DragControls, Environment, OrbitControls } from "@react-three/drei";
+import { DragControls, Environment, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
-import DiamondModel from "./DiamondModel";
+import { lazy, Suspense, useRef } from "react";
 import * as THREE from "three";
 import { Mesh } from "three";
-import Model from "./Model";
+
+const Model = lazy(() => import("./Model"));
+const DiamondModel = lazy(() => import("./DiamondModel"));
+// const PurpleDiamond = lazy(() => import("./PurpleDiamond"));
+
+const Loading = () => {
+    return (
+      <mesh position={[0, 0, 0]}>
+        <Text fontSize={1} color="black" anchorX="center" anchorY="middle">
+          Loading...
+        </Text>
+      </mesh>
+    );
+  };
+  
 
 function DragnDrop() {
   const diamondRef = useRef<Mesh>(null);
@@ -62,7 +75,7 @@ function DragnDrop() {
           </mesh>
         </DragControls>
 
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loading />}>
           <mesh ref={ringRef} position={[0, 0, 0]}>
           {/* <primitive object={new THREE.AxesHelper(53)} /> */}
             <Model
